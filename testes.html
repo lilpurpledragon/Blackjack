@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testes</title>
+</head>
+<body>
+<button onclick="testes_shuffle()">Try it</button>
+<p id="demo"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<p id="demo4"></p>
+<p id="demo5"></p>
+<p id="demo6"></p>
+<p id="demo7"></p>
+<p id="demo8"></p>
+<p id="demo9"></p>
+<script>
+    function new_deck() {
+        let deck = [];
+        let naipe = "";
+        for(let count = 0; count < 4; ++count){
+            if(count == 0)naipe = "O";
+            if(count == 1)naipe = "E";
+            if(count == 2)naipe = "C";
+            if(count == 3)naipe = "P";
+            for(let n = 1; n < 14; ++n){
+                const carta = [naipe, n];
+                deck.push(carta);
+            }
+        }
+        return deck;
+    };
+
+     function shuffle(deck) {
+         let indices = [];
+         for(let i = 0; i<52; ++i){indices.push(i);}
+         let index = 0;
+         let new_deck = [];
+         for(let count = 0; count < 52; ++count){
+             index = indices[Math.floor(Math.random()*indices.length)];
+             new_deck.push(deck[index]);
+             indices.splice(indices.indexOf(index), 1);
+         }
+         return new_deck;
+    };
+
+    function get_cards_value(cards) {
+        let count = 0;
+        for(let i = 0; i<cards.length; ++i){
+            let valor_card = cards[i][1];
+            if(valor_card >=2 && valor_card <=9){
+                count = count + valor_card;
+            }
+            else{
+                if(valor_card >=10){
+                    count = count + 10;
+                }
+                else{
+                    if(count > 10){count = count + 1;}
+                    else{count = count + 11;}
+                }
+            }
+        }
+        return count;
+    }
+
+     function testes_shuffle(){
+         const deck =  new_deck();
+         const shuffle_deck = shuffle(deck);
+         let cards = [];
+         for(let i = 0; i<4; ++i){
+             cards.push(shuffle_deck[i]);
+         }
+         document.getElementById("demo").innerHTML = deck.toString();
+         document.getElementById("demo2").innerHTML = shuffle_deck[0].toString();
+         document.getElementById("demo3").innerHTML = shuffle_deck.toString();
+         document.getElementById("demo4").innerHTML = shuffle_deck[0].toString();
+         document.getElementById("demo5").innerHTML = shuffle_deck[0][0].toString();
+         document.getElementById("demo6").innerHTML = shuffle_deck[0][1].toString();
+         document.getElementById("demo7").innerHTML = cards.toString();
+         document.getElementById("demo8").innerHTML = get_cards_value(cards);
+         cards.splice(1,1);
+         document.getElementById("demo9").innerHTML = cards.toString();
+     }
+</script>
+</body>
+</html>
